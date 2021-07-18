@@ -51,15 +51,15 @@ namespace make_dashboard
             _undecidedEvents = new List<CalendarEvent>();
             _notify = false;
 
-            //if (today.DayOfWeek == DayOfWeek.Saturday || today.DayOfWeek == DayOfWeek.Sunday) { return; }
+            if (today.DayOfWeek == DayOfWeek.Saturday || today.DayOfWeek == DayOfWeek.Sunday) { return; }
 
             var service = new Serviceaccount("Test", GoogleCalendar.Access.READONLY, jsonpath);
             Serviceaccount.ReadingRequest request = new Serviceaccount.ReadingRequest
             {
                 calendar_id = HOLIDAY_CALENDAR_ID,
                 enabled_filter = true,
-                start_filter = today.AddDays(1),
-                end_filter = today.AddDays(2)
+                start_filter = today,
+                end_filter = today.AddDays(1)
             };
             var holiday = service.GetEventList(request);
             if (holiday.Length != 0) { return; }
