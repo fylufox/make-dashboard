@@ -39,6 +39,7 @@ namespace make_dashboard.GoogleCalendarAccess
             public string description;
             public string location;
             public string participation;
+            public string link;
         }
 
         public struct Calendarlist
@@ -126,6 +127,7 @@ namespace make_dashboard.GoogleCalendarAccess
                 eventlist[i].color = item.ColorId;
                 eventlist[i].description = item.Description;
                 eventlist[i].location = item.Location;
+                eventlist[i].link = item.HtmlLink;
                 //DateTime Consistency
                 if (item.Start.DateTime != null)
                 {

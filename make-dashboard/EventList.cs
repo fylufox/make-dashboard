@@ -26,6 +26,7 @@ namespace make_dashboard
             public DateTime end;
             public bool Allday;
             public Participation Participation;
+            public string link;
         }
 
         private List<CalendarEvent> _acceptedEvents;
@@ -80,6 +81,7 @@ namespace make_dashboard
                 calendarEvent.start = item.start;
                 calendarEvent.end = item.end;
                 calendarEvent.Allday = item.dateonly;
+                calendarEvent.link = item.link;
                 if (item.participation == null)
                 {
                     calendarEvent.Participation = Participation.accepted;

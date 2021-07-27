@@ -51,7 +51,7 @@ namespace make_dashboard.slack
                     string end = item.end.ToString("t");
                     time = string.Format("{0} - {1}", start, end);
                 }
-                message.Add(string.Format("*{0}* ({1})\n場所：{2}", item.Title, time, item.Location));
+                message.Add(string.Format("*<{3}|{0}>* ({1})\n場所：{2}", item.Title, time, item.Location,item.link));
             }
             if (message.Count == 0) { message.Add("0件"); }
 
@@ -92,11 +92,11 @@ namespace make_dashboard.slack
                     case "処理中":
                         status = ":large_blue_circle:処理中";
                         break;
-                    case "処理済":
+                    case "処理済み":
                         status = ":large_green_circle:処理済み";
                         break;
                 }
-                str = string.Format("*{0}* \n{1}\n状態：{2}\n期日：{3}",item.issuekey,item.summary,status,dueDate);
+                str = string.Format("*<https://aws-plus.backlog.jp/view/{0}|{0}>* \n{1}\n状態：{2}\n期日：{3}", item.issuekey,item.summary,status,dueDate);
                 message.Add(str);
             }
             if (message.Count == 0) { message.Add("0件"); }
