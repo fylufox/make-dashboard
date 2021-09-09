@@ -47,8 +47,8 @@ namespace make_dashboard.slack
                 if (item.Allday == true) { time = "終日"; }
                 else
                 {
-                    string start = item.start.ToString("t");
-                    string end = item.end.ToString("t");
+                    string start = item.start.AddHours(9).ToString("t");
+                    string end = item.end.AddHours(9).ToString("t");
                     time = string.Format("{0} - {1}", start, end);
                 }
                 message.Add(string.Format("*<{3}|{0}>* ({1})\n場所：{2}", item.Title, time, item.Location,item.link));

@@ -95,6 +95,10 @@ namespace make_dashboard
                 {
                     _acceptedEvents.Add(calendarEvent);
                 }
+                else if (calendarEvent.Participation == Participation.declined)
+                {
+
+                }
                 else
                 {
                     _undecidedEvents.Add(calendarEvent);
