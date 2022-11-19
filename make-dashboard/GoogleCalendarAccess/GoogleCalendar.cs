@@ -112,6 +112,8 @@ namespace make_dashboard.GoogleCalendarAccess
             {  //Filter Settings
                 request.TimeMin = reading_request.start_filter;
                 request.TimeMax = reading_request.end_filter;
+
+                request.TimeZone = "UTC";
             }
             request.MaxResults = reading_request.number_of_event;
 
@@ -143,7 +145,7 @@ namespace make_dashboard.GoogleCalendarAccess
                 if (item.Attendees == null) { continue; }
                 foreach(var iitem in item.Attendees)
                 {
-                    if (iitem.Email != reading_request.calendar_id)
+                    if (!Regex.IsMatch(iitem.Email,"n-nakatani.*"))
                     {
                         continue;
                     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 using make_dashboard.GoogleCalendarAccess;
 
@@ -48,13 +49,14 @@ namespace make_dashboard
         public EventList(string email, string jsonpath)
         {
             var today = DateTime.Now.Date;
+            //today = new DateTime(2022, 11, 16);
             _acceptedEvents = new List<CalendarEvent>();
             _undecidedEvents = new List<CalendarEvent>();
             _notify = false;
 
             if (today.DayOfWeek == DayOfWeek.Saturday || today.DayOfWeek == DayOfWeek.Sunday) { return; }
 
-            var service = new Serviceaccount("Test", GoogleCalendar.Access.READONLY, jsonpath);
+            var service = new Serviceaccount("time-dashboard", GoogleCalendar.Access.READONLY, jsonpath);
             Serviceaccount.ReadingRequest request = new Serviceaccount.ReadingRequest
             {
                 calendar_id = HOLIDAY_CALENDAR_ID,
@@ -70,9 +72,10 @@ namespace make_dashboard
             var events = service.GetEventList(request);
             foreach (var item in events)
             {
-                if (item.summary == "有給")
+                if (Regex.IsMatch(item.summary, ".*有給.*"))
                 {
                     _notify = false;
+                    Console.WriteLine("Today is paid holiday!");
                     break;
                 }
                 CalendarEvent calendarEvent = new CalendarEvent();

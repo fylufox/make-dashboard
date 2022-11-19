@@ -68,8 +68,13 @@ namespace make_dashboard.slack
 
         public string Issuelist(List<IssueList.Issue> issues)
         {
+            return Issuelist(issues, "0000");
+        }
+        public string Issuelist(List<IssueList.Issue> issues,string ts)
+        {
+            var time = DateTime.Now;
             var color = "05A136";
-            var block_message = "アサインされている課題";
+            var block_message = $"アサインされている課題 ({time.Hour+9}:{time.Minute} 更新)";
             List<string> message = new List<string>();
             foreach (var item in issues)
             {
@@ -106,9 +111,32 @@ namespace make_dashboard.slack
             var slack_message = new JObject
             {
                 ["channel"] = _channle,
+                ["ts"]=ts,
                 ["attachments"] = attachments,
                 ["blocks"] = blocks
             };
+            var button = new JObject
+            {
+                ["type"] = "actions",
+                ["elements"] = new JArray
+                {
+                    new JObject
+                    {
+                        ["type"]="button",
+                        ["text"]=new JObject
+                        {
+                            ["type"]="plain_text",
+                            ["text"]="更新",
+                            ["emoji"]=true
+                        },
+                        ["style"]="primary",
+                        ["action_id"]="update"
+                    }
+                }
+            };
+            JArray j_blocks = (JArray)slack_message["attachments"][0]["blocks"];
+            j_blocks.Add(button);
+            slack_message["attachments"][0]["blocks"] = j_blocks;
             return slack_message.ToString();
         }
 
