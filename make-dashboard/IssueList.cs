@@ -27,7 +27,7 @@ namespace make_dashboard
         public IssueList(string apikey,string assignee_id)
         {
             _issues = new List<Issue>();
-            string fullurl = string.Format("{0}?apiKey={1}&assigneeId[]={2}&statusId[0]=1&statusId[1]=2&statusId[2]=3",
+            string fullurl = string.Format("{0}?apiKey={1}&assigneeId[]={2}&statusId[0]=1&statusId[1]=2&statusId[2]=3&count=100",
                 _URL, apikey, assignee_id);
             var client = new HttpClient();
             var res = client.GetAsync(fullurl).Result;
